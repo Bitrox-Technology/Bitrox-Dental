@@ -18,6 +18,7 @@ app.use(cors())
 app.use(bodyParser.json());
 
 const SCOPES = [process.env.SCOPES];
+// console.log("SCOPE", SCOPES)
 const credentials = base64.decode(process.env.CREDENTIALS)
 let jsonCredential = JSON.parse(credentials)
 // console.log("Credentials--", jsonCredential)
@@ -30,6 +31,7 @@ const auth = new google.auth.GoogleAuth({
 const sheets = google.sheets({ version: 'v4', auth });
 const SPREADSHEET_ID = process.env.SPREADSHEET_ID; // Replace with your spreadsheet ID
 
+// console.log(SPREADSHEET_ID)
 
 // API endpoint to handle form submission
 app.post('/submit', async (req, res) => {
@@ -75,10 +77,10 @@ app.post('/submit', async (req, res) => {
 
     await mail(fullName, dateAndTime , email)
 
-    res.status(200).json('Data saved successfully.');
+    res.status(200).send('Data saved successfully.');
   } catch (error) { 
     console.error('Error saving data:', error);
-    res.status(500).json('Internal Server Error.', error);
+    res.status(500).send('Server Error.');
   }
 });
 
