@@ -12,15 +12,11 @@ const base64= require("base-64")
 
 // Set up Express app
 const app = express();
+app.get("/",(req, res) => res.send("Welcome to Bitrox Dental Backend!!") )
+
 app.use(cors())
 app.use(bodyParser.json());
 
-// Multer setup for handling file uploads
-const upload = multer({ dest: 'uploads/' });
-
-// Google Sheets setup
-// const credentials = require('./credentials.json'); 
-// console.log(credentials)// Replace with your credentials file
 const SCOPES = [process.env.SCOPES];
 const credentials = base64.decode(process.env.CREDENTIALS)
 let jsonCredential = JSON.parse(credentials)
@@ -34,7 +30,6 @@ const auth = new google.auth.GoogleAuth({
 const sheets = google.sheets({ version: 'v4', auth });
 const SPREADSHEET_ID = process.env.SPREADSHEET_ID; // Replace with your spreadsheet ID
 
-app.get("/",(req, res) => res.send("Welcome to Bitrox Dental Backend!!") )
 
 // API endpoint to handle form submission
 app.post('/submit', async (req, res) => {
