@@ -34,7 +34,7 @@ const auth = new google.auth.GoogleAuth({
 const sheets = google.sheets({ version: 'v4', auth });
 const SPREADSHEET_ID = process.env.SPREADSHEET_ID; // Replace with your spreadsheet ID
 
-app.get("/", "Welcome to Bitrox Dental Backend!!")
+app.get("/",(req, res) => res.send("Welcome to Bitrox Dental Backend!!") )
 
 // API endpoint to handle form submission
 app.post('/submit', async (req, res) => {
