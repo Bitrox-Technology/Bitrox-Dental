@@ -8,7 +8,9 @@ const fs = require('fs');
 const mail = require("./mail.js")
 const cors = require("cors")
 const base64= require("base-64")
+// const c = require("./credentials.json")
 
+// console.log(c)
 
 // Set up Express app
 const app = express();
@@ -19,16 +21,19 @@ app.use(bodyParser.json());
 
 const SCOPES = [process.env.SCOPES];
 // console.log("SCOPE", SCOPES)
-const credentials = base64.decode(process.env.CREDENTIALS)
-let jsonCredential = JSON.parse(credentials)
-// console.log("Credentials--", jsonCredential)
+const credentialsString = base64.decode(process.env.CREDENTIALS)
+const credentials = JSON.parse(credentialsString);
+// console.log(jsonString)
 
 const auth = new google.auth.GoogleAuth({
-  jsonCredential,
+  credentials: credentials,
   scopes: SCOPES,
 });
 
+console.log(auth)
+
 const sheets = google.sheets({ version: 'v4', auth });
+// console.log(sheets)
 const SPREADSHEET_ID = process.env.SPREADSHEET_ID; // Replace with your spreadsheet ID
 
 // console.log(SPREADSHEET_ID)
@@ -50,7 +55,7 @@ app.post('/submit', async (req, res) => {
       transcript,
       recording
     } = req.body
-    console.log(req.body)
+    // console.log(req.body)
 
     // Append data to Google Sheets
     const values = [[
