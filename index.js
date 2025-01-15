@@ -34,6 +34,8 @@ const auth = new google.auth.GoogleAuth({
 const sheets = google.sheets({ version: 'v4', auth });
 const SPREADSHEET_ID = '11d8M_Ug9ak5lseaeQlFXsgD6VJHHJXaOXu3f4kxY06c'; // Replace with your spreadsheet ID
 
+app.get("/", "Welcome to Bitrox Dental Backend!!")
+
 // API endpoint to handle form submission
 app.post('/submit', async (req, res) => {
   try {
@@ -76,7 +78,7 @@ app.post('/submit', async (req, res) => {
       resource: { values },
     });
 
-    await mail(full_name, dateAndTime , email)
+    await mail(fullName, dateAndTime , email)
 
     res.status(200).json('Data saved successfully.');
   } catch (error) { 
