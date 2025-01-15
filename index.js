@@ -32,7 +32,7 @@ const auth = new google.auth.GoogleAuth({
 });
 
 const sheets = google.sheets({ version: 'v4', auth });
-const SPREADSHEET_ID = '11d8M_Ug9ak5lseaeQlFXsgD6VJHHJXaOXu3f4kxY06c'; // Replace with your spreadsheet ID
+const SPREADSHEET_ID = process.env.SPREADSHEET_ID; // Replace with your spreadsheet ID
 
 app.get("/", "Welcome to Bitrox Dental Backend!!")
 
