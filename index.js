@@ -40,37 +40,22 @@ const SPREADSHEET_ID = process.env.SPREADSHEET_ID; // Replace with your spreadsh
 
 // API endpoint to handle form submission
 app.post('/submit', async (req, res) => {
-  try {
-    const {
-      callData,
-      serviceDesired,
-      dateAndTime,
-      fullName,
-      email,
-      phone,
-      birthday,
-      reasonForAppointment,
-      dentalInsurance,
-      callSummary,
-      transcript,
-      recording
-    } = req.body
-    // console.log(req.body)
-
-    // Append data to Google Sheets
+   try {
+      const data = req.body
+        // Append data to Google Sheets
     const values = [[
-      callData,
-      serviceDesired,
-      dateAndTime,
-      fullName,
-      email,
-      phone,
-      birthday,
-      reasonForAppointment,
-      dentalInsurance,
-      callSummary,
-      transcript,
-      recording
+      data.callData || "",
+      data.serviceDesired || "",
+      data.dateAndTime || "",
+      data.fullName  || "",
+      data.email || "",
+      data.phone || "",
+      data.birthday || "",
+      data.reasonForAppointment || "",
+      data.dentalInsurance || "",
+      data.callSummary || "",
+      data.transcript || "",
+      data.recording || ""
     ]];
 
     await sheets.spreadsheets.values.append({
@@ -80,7 +65,7 @@ app.post('/submit', async (req, res) => {
       resource: { values },
     });
 
-    await mail(fullName, dateAndTime , email)
+    await mail(data.fullName, data.dateAndTime , data.email)
 
     res.status(200).send('Data saved successfully.');
   } catch (error) { 
